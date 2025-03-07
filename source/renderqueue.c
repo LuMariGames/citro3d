@@ -151,7 +151,7 @@ void C3Di_RenderQueueWaitDone(void)
 float C3D_FrameRate(float fps)
 {
 	float old = framerate;
-	if (fps > 0.0f && fps <= 120.0f)
+	if (fps > 0.0f && fps <= 60.0f)
 	{
 		framerate = fps;
 		framerateCounter[0] = fps;
