@@ -75,7 +75,7 @@ static void onQueueFinish(gxCmdQueue_s* queue)
 void C3D_FrameSync(void)
 {
 	u64 time = osGetTime();
-	u64 start = time + 13;
+	u64 start = time + 14;
 	do
 	{
 		time = osGetTime();
