@@ -74,14 +74,12 @@ static void onQueueFinish(gxCmdQueue_s* queue)
 
 void C3D_FrameSync(void)
 {
-	u32 cur[2];
-	u32 start[2] = { frameCounter[0], frameCounter[1] };
+	u64 time;
+	u32 start = time + 0.016666;
 	do
 	{
-		gspWaitForAnyEvent();
-		cur[0] = frameCounter[0];
-		cur[1] = frameCounter[1];
-	} while (cur[0]==start[0] || cur[1]==start[1]);
+		time = osGetTime();
+	} while (time < start);
 }
 
 u32 C3D_FrameCounter(int id)
