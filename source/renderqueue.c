@@ -79,7 +79,7 @@ void C3D_FrameSync(void)
 	do
 	{
 		time = osGetTime();
-	} while (time <= start);
+	} while (time < start);
 }
 
 u32 C3D_FrameCounter(int id)
