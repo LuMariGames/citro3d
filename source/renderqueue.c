@@ -78,6 +78,7 @@ void C3D_FrameSync(void)
 	u32 start[2] = { frameCounter[0], frameCounter[1] };
 	do
 	{
+		gspWaitForAnyEvent();
 		cur[0] = frameCounter[0];
 		cur[1] = frameCounter[1];
 	} while (cur[0]==start[0] || cur[1]==start[1]);
@@ -164,8 +165,10 @@ bool C3D_FrameBegin(u8 flags)
 	C3D_Context* ctx = C3Di_GetContext();
 	if (inFrame) return false;
 
-	if (flags & C3D_FRAME_SYNCDRAW) C3D_FrameSync();
-	if (!C3Di_WaitAndClearQueue((flags & C3D_FRAME_NONBLOCK) ? 0 : -1)) return false;
+	if (flags & C3D_FRAME_SYNCDRAW)
+		C3D_FrameSync();
+	if (!C3Di_WaitAndClearQueue((flags & C3D_FRAME_NONBLOCK) ? 0 : -1))
+		return false;
 
 	inFrame = true;
 	osTickCounterStart(&cpuTime);
