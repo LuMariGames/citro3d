@@ -12,7 +12,7 @@ static bool inFrame, inSafeTransfer, measureGpuTime;
 static bool needSwapTop, needSwapBot, isTopStereo;
 static float framerate = 60.0f;
 static float framerateCounter[2] = { 60.0f, 60.0f };
-static u32 frameCounter[2];
+static uint_fast8_t frameCounter[2];
 static void (* frameEndCb)(void*);
 static void* frameEndCbData;
 
@@ -74,8 +74,8 @@ static void onQueueFinish(gxCmdQueue_s* queue)
 
 void C3D_FrameSync(void)
 {
-	u32 cur[2];
-	u32 start[2] = { frameCounter[0], frameCounter[1] };
+	uint_fast8_t cur[2];
+	uint_fast8_t start[2] = { frameCounter[0], frameCounter[1] };
 	do
 	{
 		gspWaitForAnyEvent();
