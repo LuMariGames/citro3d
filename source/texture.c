@@ -50,7 +50,7 @@ static inline void allocFree(void* addr)
 static void C3Di_TexCubeDelete(C3D_TexCube* cube)
 {
 	int i;
-	for (i = 0; i < 6; i ++)
+	for (i = 0; i < 6; ++i)
 	{
 		if (cube->data[i])
 		{
@@ -80,7 +80,7 @@ bool C3D_TexInitWithParams(C3D_Tex* tex, C3D_TexCube* cube, C3D_TexInitParams p)
 	{
 		memset(cube, 0, sizeof(*cube));
 		int i;
-		for (i = 0; i < 6; i ++)
+		for (i = 0; i < 6; ++i)
 		{
 			cube->data[i] = p.onVram ? vramAlloc(total_size) : linearAlloc(total_size);
 			if (!cube->data[i] ||
@@ -125,7 +125,7 @@ void C3D_TexLoadImage(C3D_Tex* tex, const void* data, GPU_TEXFACE face, int leve
 static void C3Di_DownscaleRGBA8(u32* dst, const u32* src[4])
 {
 	u32 i, j;
-	for (i = 0; i < 64; i ++)
+	for (i = 0; i < 64; ++i)
 	{
 		const u32* a = src[i>>4] + (i<<2 & 0x3F);
 		u32 dest = 0;
@@ -141,10 +141,10 @@ static void C3Di_DownscaleRGBA8(u32* dst, const u32* src[4])
 static void C3Di_DownscaleRGB8(u8* dst, const u8* src[4])
 {
 	u32 i, j;
-	for (i = 0; i < 64; i ++)
+	for (i = 0; i < 64; ++i)
 	{
 		const u8* a = src[i>>4] + 3*(i<<2 & 0x3F);
-		for (j = 0; j < 3; j ++)
+		for (j = 0; j < 3; ++j)
 		{
 			*dst++ = ((u32)a[0] + a[3] + a[6] + a[9])>>2;
 			a++;
@@ -171,7 +171,7 @@ void C3D_TexGenerateMipmap(C3D_Tex* tex, GPU_TEXFACE face)
 	u32 level_size = tex->size;
 	u32 src_width = tex->width;
 	u32 src_height = tex->height;
-	for (i = 0; i < tex->maxLevel; i ++)
+	for (i = 0; i < tex->maxLevel; ++i)
 	{
 		void* dst = (u8*)src + level_size;
 		u32 dst_width = src_width>>1;
@@ -187,9 +187,9 @@ void C3D_TexGenerateMipmap(C3D_Tex* tex, GPU_TEXFACE face)
 		u32 i,j;
 		u32 src_stride = src_width/8;
 		u32 dst_stride = dst_width/8;
-		for (j = 0; j < (dst_height/8); j ++)
+		for (j = 0; j < (dst_height/8); ++j)
 		{
-			for (i = 0; i < dst_stride; i ++)
+			for (i = 0; i < dst_stride; ++i)
 			{
 				void* dst_block = (u8*)dst + block_size*(i + j*dst_stride);
 				const void* src_blocks[4] =
@@ -278,7 +278,7 @@ void C3Di_SetTex(int unit, C3D_Tex* tex)
 		C3D_TexCube* cube = tex->cube;
 		regcount = 10;
 		reg[4] = osConvertVirtToPhys(cube->data[0]) >> 3;
-		for (i = 1; i < 6; i ++)
+		for (i = 1; i < 6; ++i)
 			reg[4+i] = (osConvertVirtToPhys(cube->data[i]) >> 3) & 0x3FFFFF;
 	}
 
