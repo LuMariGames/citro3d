@@ -48,7 +48,7 @@ void C3D_UpdateUniforms(GPU_SHADER_TYPE type)
 
 		// Find the number of consecutive dirty uniforms
 		int j;
-		for (j = i; j < C3D_FVUNIF_COUNT && C3D_FVUnifDirty[type][j]; j ++);
+		for (j = i; j < C3D_FVUNIF_COUNT && C3D_FVUnifDirty[type][j]; ++j);
 
 		// Upload the uniforms
 		GPUCMD_AddWrite(GPUREG_VSH_FLOATUNIFORM_CONFIG+offset, 0x80000000|i);
@@ -56,7 +56,7 @@ void C3D_UpdateUniforms(GPU_SHADER_TYPE type)
 
 		// Clear the dirty flag
 		int k;
-		for (k = i; k < j; k ++)
+		for (k = i; k < j; ++k)
 		{
 			C3D_FVUnifDirty[type][k] = false;
 			C3Di_FVUnifEverDirty[type][k] = true;
@@ -67,7 +67,7 @@ void C3D_UpdateUniforms(GPU_SHADER_TYPE type)
 	}
 
 	// Update IVec uniforms
-	for (i = 0; i < C3D_IVUNIF_COUNT; i ++)
+	for (i = 0; i < C3D_IVUNIF_COUNT; ++i)
 	{
 		if (!C3D_IVUnifDirty[type][i]) continue;
 
@@ -90,9 +90,9 @@ void C3Di_DirtyUniforms(GPU_SHADER_TYPE type)
 	C3D_BoolUnifsDirty[type] = true;
 	if (C3Di_ShaderFVecData[type].count)
 		C3Di_ShaderFVecData[type].dirty = true;
-	for (i = 0; i < C3D_FVUNIF_COUNT; i ++)
+	for (i = 0; i < C3D_FVUNIF_COUNT; ++i)
 		C3D_FVUnifDirty[type][i] = C3D_FVUnifDirty[type][i] || C3Di_FVUnifEverDirty[type][i];
-	for (i = 0; i < C3D_IVUNIF_COUNT; i ++)
+	for (i = 0; i < C3D_IVUNIF_COUNT; ++i)
 		C3D_IVUnifDirty[type][i] = C3D_IVUnifDirty[type][i] || C3Di_IVUnifEverDirty[type][i];
 }
 
@@ -112,7 +112,7 @@ void C3Di_LoadShaderUniforms(shaderInstance_s* si)
 	if (si->intUniformMask)
 	{
 		int i;
-		for (i = 0; i < 4; i ++)
+		for (i = 0; i < 4; ++i)
 		{
 			if (si->intUniformMask & BIT(i))
 			{
