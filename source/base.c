@@ -118,10 +118,10 @@ bool C3D_Init(size_t cmdBufSize)
 	ctx->fogClr = 0;
 	ctx->fogLut = NULL;
 
-	for (i = 0; i < 3; i ++)
+	for (i = 0; i < 3; ++i)
 		ctx->tex[i] = NULL;
 
-	for (i = 0; i < 6; i ++)
+	for (i = 0; i < 6; ++i)
 		C3D_TexEnvInit(&ctx->texEnv[i]);
 
 	ctx->fixedAttribDirty = 0;
@@ -212,7 +212,7 @@ void C3Di_UpdateContext(void)
 	if (ctx->flags & C3DiF_TexAll)
 	{
 		u32 units = 0;
-		for (i = 0; i < 3; i ++)
+		for (i = 0; i < 3; ++i)
 		{
 			if (ctx->tex[i])
 			{
@@ -268,7 +268,7 @@ void C3Di_UpdateContext(void)
 
 	if (ctx->flags & C3DiF_TexEnvAll)
 	{
-		for (i = 0; i < 6; i ++)
+		for (i = 0; i < 6; ++i)
 		{
 			if (!(ctx->flags & C3DiF_TexEnv(i))) continue;
 			C3Di_TexEnvBind(i, &ctx->texEnv[i]);
@@ -291,7 +291,7 @@ void C3Di_UpdateContext(void)
 
 	if (ctx->fixedAttribDirty)
 	{
-		for (i = 0; i < 12; i ++)
+		for (i = 0; i < 12; ++i)
 		{
 			if (!(ctx->fixedAttribDirty & BIT(i))) continue;
 			C3D_FVec* v = &ctx->fixedAttribs[i];
