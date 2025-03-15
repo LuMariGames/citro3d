@@ -133,7 +133,7 @@ void C3Di_RenderQueueExit(void)
 
 	C3Di_RenderQueueDisableVBlank();
 
-	for (i = 0; i < 3; i ++)
+	for (i = 0; i < 3; ++i)
 		linkedTarget[i] = NULL;
 
 	for (a = firstTarget; a; a = next)
@@ -216,7 +216,7 @@ void C3D_FrameEnd(u8 flags)
 	int i;
 	C3D_RenderTarget* target;
 	isTopStereo = false;
-	for (i = 2; i >= 0; i --)
+	for (i = 2; i >= 0; --i)
 	{
 		target = linkedTarget[i];
 		if (!target || !target->used)
