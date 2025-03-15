@@ -5,7 +5,7 @@ static void C3Di_LightEnvMtlBlend(C3D_LightEnv* env)
 	int i;
 	C3D_Material* mtl = &env->material;
 	u32 color = 0;
-	for (i = 0; i < 3; i ++)
+	for (i = 0; i < 3; ++i)
 	{
 		int v = 255*(mtl->emission[i] + mtl->ambient[i]*env->ambient[i]);
 		if (v < 0) v = 0;
@@ -43,7 +43,7 @@ static void C3Di_LightEnvSelectLayer(C3D_LightEnv* env)
 
 	int i = 7;
 	if (!(env->flags & C3DF_LightEnv_IsCP_Any))
-		for (i = 0; i < 7; i ++)
+		for (i = 0; i < 7; ++i)
 			if ((layer_enabled[i] & reg) == reg) // Check if the layer supports all LUTs we need
 				break;
 	env->conf.config[0] = (env->conf.config[0] &~ (0xF<<4)) | (GPU_LIGHT_ENV_LAYER_CONFIG(i)<<4);
@@ -58,7 +58,7 @@ void C3Di_LightEnvUpdate(C3D_LightEnv* env)
 	{
 		conf->numLights = 0;
 		conf->permutation = 0;
-		for (i = 0; i < 8; i ++)
+		for (i = 0; i < 8; ++i)
 		{
 			C3D_Light* light = env->lights[i];
 			if (!light) continue;
@@ -89,7 +89,7 @@ void C3Di_LightEnvUpdate(C3D_LightEnv* env)
 
 	if (env->flags & C3DF_LightEnv_LutDirtyAll)
 	{
-		for (i = 0; i < 6; i ++)
+		for (i = 0; i < 6; ++i)
 		{
 			static const u8 lutIds[] = { 0, 1, 3, 4, 5, 6 };
 			if (!(env->flags & C3DF_LightEnv_LutDirty(i))) continue;
@@ -99,7 +99,7 @@ void C3Di_LightEnvUpdate(C3D_LightEnv* env)
 		env->flags &= ~C3DF_LightEnv_LutDirtyAll;
 	}
 
-	for (i = 0; i < 8; i ++)
+	for (i = 0; i < 8; ++i)
 	{
 		C3D_Light* light = env->lights[i];
 		if (!light) continue;
@@ -135,10 +135,10 @@ void C3Di_LightEnvDirty(C3D_LightEnv* env)
 {
 	env->flags |= C3DF_LightEnv_Dirty;
 	int i;
-	for (i = 0; i < 6; i ++)
+	for (i = 0; i < 6; ++i)
 		if (env->luts[i])
 			env->flags |= C3DF_LightEnv_LutDirty(i);
-	for (i = 0; i < 8; i ++)
+	for (i = 0; i < 8; ++i)
 	{
 		C3D_Light* light = env->lights[i];
 		if (!light) continue;
@@ -181,7 +181,7 @@ void C3D_LightEnvMaterial(C3D_LightEnv* env, const C3D_Material* mtl)
 	int i;
 	memcpy(&env->material, mtl, sizeof(*mtl));
 	env->flags |= C3DF_LightEnv_MtlDirty;
-	for (i = 0; i < 8; i ++)
+	for (i = 0; i < 8; ++i)
 	{
 		C3D_Light* light = env->lights[i];
 		if (light) light->flags |= C3DF_Light_MatDirty;
