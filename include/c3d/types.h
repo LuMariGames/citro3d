@@ -4,8 +4,8 @@
 #else
 #include <stdbool.h>
 #include <stdint.h>
-typedef uint8_t u8;
-typedef uint32_t u32;
+typedef uint_fast8_t u8;
+typedef uint_fast32_t u32;
 #endif
 
 #ifndef CITRO3D_NO_DEPRECATION
