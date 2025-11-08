@@ -165,6 +165,8 @@ bool C3D_FrameBegin(u8 flags)
 	C3D_Context* ctx = C3Di_GetContext();
 	if (inFrame) return false;
 
+	if (flags & C3D_FRAME_SYNCDRAW)
+		C3D_FrameSync();
 	if (!C3Di_WaitAndClearQueue((flags & C3D_FRAME_NONBLOCK) ? 0 : -1))
 		return false;
 
