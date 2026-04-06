@@ -29,16 +29,12 @@ static bool framerateLimit(int id)
 	return false;
 }
 
-static void onVBlank0(C3D_UNUSED void* unused)
-{
-	if (framerateLimit(0))
-		frameCounter[0]++;
+static void onVBlank0(C3D_UNUSED void* unused) {
+	frameCounter[0]++;
 }
 
-static void onVBlank1(C3D_UNUSED void* unused)
-{
-	if (framerateLimit(1))
-		frameCounter[1]++;
+static void onVBlank1(C3D_UNUSED void* unused) {
+	frameCounter[1]++;
 }
 
 static void onQueueFinish(gxCmdQueue_s* queue)
@@ -72,12 +68,10 @@ static void onQueueFinish(gxCmdQueue_s* queue)
 	}
 }
 
-void C3D_FrameSync(void)
-{
+void C3D_FrameSync(void) {
 	uint_fast8_t cur[2];
 	uint_fast8_t start[2] = { frameCounter[0], frameCounter[1] };
-	do
-	{
+	do {
 		gspWaitForAnyEvent();
 		cur[0] = frameCounter[0];
 		cur[1] = frameCounter[1];
