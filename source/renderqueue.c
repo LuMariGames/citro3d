@@ -10,24 +10,11 @@ static TickCounter gpuTime, cpuTime;
 
 static bool inFrame, inSafeTransfer, measureGpuTime;
 static bool needSwapTop, needSwapBot, isTopStereo;
-static float framerate = 60.0f;
-static float framerateCounter[2] = { 60.0f, 60.0f };
 static uint_fast8_t frameCounter[2];
 static void (* frameEndCb)(void*);
 static void* frameEndCbData;
 
 static void C3Di_RenderTargetDestroy(C3D_RenderTarget* target);
-
-static bool framerateLimit(int id)
-{
-	framerateCounter[id] -= framerate;
-	if (framerateCounter[id] <= 0.0f)
-	{
-		framerateCounter[id] += 60.0f;
-		return true;
-	}
-	return false;
-}
 
 static void onVBlank0(C3D_UNUSED void* unused) {
 	frameCounter[0]++;
@@ -140,18 +127,6 @@ void C3Di_RenderQueueExit(void)
 void C3Di_RenderQueueWaitDone(void)
 {
 	C3Di_WaitAndClearQueue(-1);
-}
-
-float C3D_FrameRate(float fps)
-{
-	float old = framerate;
-	if (fps > 0.0f && fps <= 60.0f)
-	{
-		framerate = fps;
-		framerateCounter[0] = fps;
-		framerateCounter[1] = fps;
-	}
-	return old;
 }
 
 bool C3D_FrameBegin(u8 flags)
